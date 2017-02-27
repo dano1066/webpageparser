@@ -1,5 +1,5 @@
 # PHP Web Page HTML Parser
-Simple PHP class to parse a webpage with functions to extract the content of the page for us with a website preview tool.
+Simple PHP class to parse a webpage with functions to extract the content of the page for us with a website preview tool. Minimal requirements. Will work with PHP 5.4 and higher, may work with older versions, but is untested.
 
 <h2>Parsing Webpage With PHP</h2>
 Here is a simple example on how you would use the class to obtain data about a page.
