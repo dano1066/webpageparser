@@ -60,9 +60,12 @@ class URLParser
 					case "description" : return $value; break;
 					case "og:description" : return $value; break;
 					case "twitter:description" : return $value; break;
-					default: return ""; break;
 				}
 			}
+			
+			$paragraphs = $this->htmldom->getElementsByTagName('p');
+			if($paragraphs->length != 0) return $this->htmldom->getElementsByTagName('p')->item(0)->nodeValue;
+			else return "";
 		}
 		
 		function GetImage()
@@ -101,18 +104,18 @@ class URLParser
 		
 		function GetFeaturedImage()
 		{
+			$base = trim($this->GetDomainName(true), "/");
 			$metas = $this->GetMetaFields();
 			foreach ($metas as $name => $value) {
 				switch($name) { 
-					case "og:image" : return $value; break;
-					case "twitter:image" : return $value; break;
-					default: 
-						$images = $this->GetImages(); 
-						if(count($images) != 0) return $images[0];
-						else return "";
-					break;
+					case "og:image" : return $base.$value; break;
+					case "twitter:image" : return $base.$value; break;
 				}
 			}	
+			
+			$images = $this->GetImages(); 
+			if(count($images) != 0) return $base.$images[0]["src"];
+			else return "";
 		}
 		
 		function GetKeywords()
@@ -163,11 +166,12 @@ class URLParser
 			return $metafields;
 		}
 		
-		function GetDomainName()
+		function GetDomainName($baseurl = false)
 		{
 			if($this->url != null){
 				$parse = parse_url($this->url);
-				return $parse['host'];
+				if($baseurl == false) return $parse['host'];
+				else return $parse['scheme'] . "://" . $parse['host'] . "/";
 			}
 			else
 				return "";
