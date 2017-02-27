@@ -16,3 +16,5 @@ $image $parser->GetFeaturedImage();
 ```
 
 All available methods can be found within the Parser.php class.
+
+A good expanded use for this class would be to create a link preview using jQuery and AJAX. Create a php script to accept a URL and return the preview html. Using jQuery, perform an AJAX request and send the URL. The script will then return HTML preview of the url.
