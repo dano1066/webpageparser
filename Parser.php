@@ -108,13 +108,23 @@ class URLParser
 			$metas = $this->GetMetaFields();
 			foreach ($metas as $name => $value) {
 				switch($name) { 
-					case "og:image" : return $base.$value; break;
-					case "twitter:image" : return $base.$value; break;
+					case "og:image" : 
+						if($value[0] == "/") return $base.$value; 
+						else return $value;
+					break;
+					case "twitter:image" : 
+						if($value[0] == "/") return $base.$value; 
+						else return $value;
+					break;
 				}
 			}	
 			
 			$images = $this->GetImages(); 
-			if(count($images) != 0) return $base.$images[0]["src"];
+			if(count($images) != 0) 
+			{
+				if($images[0]["src"][0] == "/") return $base.$images[0]["src"];
+				else return $images[0]["src"];
+			}
 			else return "";
 		}
 		
